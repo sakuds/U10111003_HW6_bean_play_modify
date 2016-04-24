@@ -37,6 +37,15 @@ public class BeanMachine extends Application {
         index++;
       }
     }
+    
+    // Pause and play beans
+    pane.setOnMouseClicked(e -> {
+      if (cont < 10){
+        playBean();
+      }
+    });
+
+
     // Creat a scene and place it in the stage
     Scene scene = new Scene(pane,300,300);
     // Set title
@@ -45,6 +54,49 @@ public class BeanMachine extends Application {
     primaryStage.setScene(scene);
     // Display the stage
     primaryStage.show();
+  }
+  public void playBean(){
+    // Creat and set main bean in Machine
+    Circle bean = new Circle(150,40,5);
+    bean.setFill(Color.RED);
+    pane.getChildren().add(bean);
+    // Create value to compute possibility
+    int place = 0;
+    int x[] = new int[7];
+    // Creat a SecureRandom
+    SecureRandom random = new SecureRandom();
+    // For loop to run
+    for (int i =0; i <7; i++){
+      int rd = random.nextInt(50);
+      if (rd < 25){
+        place += 12.5;
+      } else {
+        place -= 12.5;
+      }
+      x[i] = place;
+    }
+        
+    // Create an animation and KeyFrame
+    Timeline animation = new Timeline(
+      new KeyFrame(Duration.ZERO, new KeyValue(bean.translateXProperty(), 0)),
+      new KeyFrame(Duration.millis(100), new KeyValue(bean.translateXProperty(),0), new KeyValue(bean.translateYProperty(), 40)),
+      new KeyFrame(Duration.millis(200), new KeyValue(bean.translateXProperty(),x[0]), new KeyValue(bean.translateYProperty(), 45)),
+      new KeyFrame(Duration.millis(300), new KeyValue(bean.translateXProperty(),x[0]),new KeyValue(bean.translateYProperty(), 65)),
+      new KeyFrame(Duration.millis(400), new KeyValue(bean.translateXProperty(),x[1]),new KeyValue(bean.translateYProperty(), 70)),
+      new KeyFrame(Duration.millis(500), new KeyValue(bean.translateXProperty(),x[1]),new KeyValue(bean.translateYProperty(), 90)),
+      new KeyFrame(Duration.millis(600), new KeyValue(bean.translateXProperty(),x[2]),new KeyValue(bean.translateYProperty(), 95)),
+      new KeyFrame(Duration.millis(700), new KeyValue(bean.translateXProperty(),x[2]),new KeyValue(bean.translateYProperty(), 115)),
+      new KeyFrame(Duration.millis(800), new KeyValue(bean.translateXProperty(),x[3]),new KeyValue(bean.translateYProperty(), 120)),
+      new KeyFrame(Duration.millis(900), new KeyValue(bean.translateXProperty(),x[3]),new KeyValue(bean.translateYProperty(), 140)),
+      new KeyFrame(Duration.millis(1000), new KeyValue(bean.translateXProperty(),x[4]),new KeyValue(bean.translateYProperty(), 145)),
+      new KeyFrame(Duration.millis(1100), new KeyValue(bean.translateXProperty(),x[4]),new KeyValue(bean.translateYProperty(), 165)),
+      new KeyFrame(Duration.millis(1200), new KeyValue(bean.translateXProperty(),x[5]),new KeyValue(bean.translateYProperty(), 170)),
+      new KeyFrame(Duration.millis(1300), new KeyValue(bean.translateXProperty(),x[5]),new KeyValue(bean.translateYProperty(), 190)),
+      new KeyFrame(Duration.millis(1400), new KeyValue(bean.translateXProperty(),x[6]),new KeyValue(bean.translateYProperty(), 195)),
+      new KeyFrame(Duration.millis(1500), new KeyValue(bean.translateXProperty(),x[6]),new KeyValue(bean.translateYProperty(), 215)),
+      new KeyFrame(Duration.millis(1600), new KeyValue(bean.translateXProperty(),x[6]),new KeyValue(bean.translateYProperty(), 235))
+    );
+    animation.play();
   }
   public static void main(String[] args) { 
     launch(args);
