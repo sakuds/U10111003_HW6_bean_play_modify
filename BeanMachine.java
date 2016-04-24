@@ -14,8 +14,18 @@ import java.security.SecureRandom;
 import javafx.event.*;
 
 public class BeanMachine extends Application {
-  // Create a pane
+  // Create a pane and datafield which compute times of playing
   private Pane pane = new Pane();
+  private int a1 = 10;
+  private int a2 = 10;
+  private int a3 = 10;
+  private int a4 = 10;
+  private int a5 = 10;
+  private int a6 = 10;
+  private int a7 = 10;
+  private int a8 = 10;
+  private int move = 0;
+  private int cont = 0;
 
   public void start(Stage primaryStage) {
     // Create polyline and line in pane
@@ -75,7 +85,34 @@ public class BeanMachine extends Application {
       }
       x[i] = place;
     }
-        
+    
+    // if beans move to the same place
+    if (x[6] > -100 && x[6] < -75) {
+      a1-=10;
+      move = a1;
+    } else if (x[6] > -75 && x[6] < -50){
+      a2-=10;
+      move = a2;
+    } else if (x[6] >-50 && x[6] < -25){
+      a3-=10;
+      move = a3;
+    } else if (x[6] >-25 && x[6] < 0){
+      a4-=10;
+      move = a4;
+    } else if (x[6] >0 && x[6] < 25){
+      a5-=10;
+      move = a5;
+    } else if (x[6] >25 && x[6] < 50){
+      a6-=10;
+      move = a6;
+    } else if (x[6] >50 && x[6] < 75){
+      a7-=10;
+      move = a7;
+    } else {
+      a8-=10;
+      move = a8;
+    }
+
     // Create an animation and KeyFrame
     Timeline animation = new Timeline(
       new KeyFrame(Duration.ZERO, new KeyValue(bean.translateXProperty(), 0)),
@@ -94,9 +131,29 @@ public class BeanMachine extends Application {
       new KeyFrame(Duration.millis(1300), new KeyValue(bean.translateXProperty(),x[5]),new KeyValue(bean.translateYProperty(), 190)),
       new KeyFrame(Duration.millis(1400), new KeyValue(bean.translateXProperty(),x[6]),new KeyValue(bean.translateYProperty(), 195)),
       new KeyFrame(Duration.millis(1500), new KeyValue(bean.translateXProperty(),x[6]),new KeyValue(bean.translateYProperty(), 215)),
-      new KeyFrame(Duration.millis(1600), new KeyValue(bean.translateXProperty(),x[6]),new KeyValue(bean.translateYProperty(), 235))
+      new KeyFrame(Duration.millis(1600), new KeyValue(bean.translateXProperty(),x[6]),new KeyValue(bean.translateYProperty(), 235+move))
     );
     animation.play();
+    // Compute number of times
+    cont++;
+    // These beans doesn't out of the machine
+    if (a1 == -40) {
+			a1 = 10;
+		} else if (a2 == -40) {
+			a2 = 10;
+		} else if (a3 == -40) {
+			a3 = 10;
+		} else if (a4 == -40) {
+			a4 = 10;
+		} else if (a5 == -40) {
+			a5 = 10;
+		} else if (a6 == -40) {
+			a6 = 10;
+		} else if (a7 == -40) {
+			a7 = 10;
+		} else if (a8 == -40) {
+			a8 = 10;
+		}
   }
   public static void main(String[] args) { 
     launch(args);
